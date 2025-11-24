@@ -76,6 +76,7 @@ jobs:
 
   no-node:
     name: No Node project detected
+    needs: check
     runs-on: ubuntu-latest
     if: needs.check.outputs.pkg_exists == 'false'
     steps:
