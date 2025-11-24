@@ -1,0 +1,85 @@
+name: Web CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+concurrency:
+  group: web-ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    name: Detect project type and scripts
+    runs-on: ubuntu-latest
+    outputs:
+      pkg_exists: ${{ steps.pkg.outputs.exists }}
+      lint: ${{ steps.scripts.outputs.lint }}
+      test: ${{ steps.scripts.outputs.test }}
+      build: ${{ steps.scripts.outputs.build }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Check for package.json
+        id: pkg
+        run: |
+          if [ -f package.json ]; then
+            echo "exists=true" >> $GITHUB_OUTPUT
+          else
+            echo "exists=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Detect npm scripts (lint/test/build)
+        id: scripts
+        run: |
+          if [ -f package.json ]; then
+            node -e "const f=require('fs');const p=JSON.parse(f.readFileSync('package.json'));const s=p.scripts||{};console.log('lint='+(!!s.lint));console.log('test='+(!!s.test));console.log('build='+(!!s.build));" | while read line; do echo "$line" >> $GITHUB_OUTPUT; done
+          else
+            echo "lint=false" >> $GITHUB_OUTPUT
+            echo "test=false" >> $GITHUB_OUTPUT
+            echo "build=false" >> $GITHUB_OUTPUT
+          fi
+
+  nodejs:
+    name: Node.js CI
+    needs: check
+    runs-on: ubuntu-latest
+    if: needs.check.outputs.pkg_exists == 'true'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Use Node.js LTS
+        uses: actions/setup-node@v4
+        with:
+          node-version: 'lts/*'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: |
+          if [ -f package-lock.json ]; then npm ci; else npm install; fi
+
+      - name: Run lint
+        if: ${{ needs.check.outputs.lint == 'true' }}
+        run: npm run lint
+
+      - name: Run tests
+        if: ${{ needs.check.outputs.test == 'true' }}
+        run: npm test
+
+      - name: Build
+        if: ${{ needs.check.outputs.build == 'true' }}
+        run: npm run build
+
+  no-node:
+    name: No Node project detected
+    runs-on: ubuntu-latest
+    if: needs.check.outputs.pkg_exists == 'false'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Notice
+        run: echo "No package.json found — Node.js steps skipped. Add a workflow or package.json to enable CI."
