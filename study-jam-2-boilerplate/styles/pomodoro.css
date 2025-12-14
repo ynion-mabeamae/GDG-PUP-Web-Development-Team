@@ -1,0 +1,303 @@
+/* GDG Color Palette & Variables */
+:root {
+  --google-blue: #4285f4;
+  --google-red: #ea4335;
+  --google-yellow: #fbbc04;
+  --google-green: #34a853;
+  --google-grey: #5f6368;
+
+  /* Theme Colors - Dynamic */
+  --theme-primary: var(--google-blue); /* Changes based on JS state */
+  --theme-bg: #202124;
+
+  --text-high: #e8eaed;
+  --text-med: #bdc1c6;
+
+  --font-display: "Google Sans", "Roboto", sans-serif;
+  --font-mono: "Roboto Mono", monospace;
+}
+
+/* Reset */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-display);
+  background-color: var(--theme-bg);
+  color: var(--text-high);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+  transition: background-color 0.5s ease;
+}
+
+/* === GDG Background Decoration === */
+.gdg-decor-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: -1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0.03;
+  font-weight: 700;
+  font-size: 40vw;
+  color: var(--text-high);
+}
+
+.gdg-decor-bg .bracket {
+  transform: scaleY(1.2);
+}
+
+/* === Header === */
+.page-header {
+  padding: 1.5rem;
+  text-align: center;
+}
+
+.gdg-logo-text {
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+}
+
+.blue {
+  color: var(--google-blue);
+}
+
+.red {
+  color: var(--google-red);
+}
+
+.yellow {
+  color: var(--google-yellow);
+}
+
+.green {
+  color: var(--google-green);
+}
+
+/* === Layout & Panel === */
+.layout {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem 1rem 3rem 1rem;
+}
+
+.glass-effect {
+  background: rgba(48, 49, 52, 0.6);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+}
+
+.panel {
+  width: 100%;
+  max-width: 420px;
+  border-radius: 28px;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Theme Bar at top */
+.panel::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 6px;
+  background: var(--theme-primary);
+  transition: background 0.4s ease;
+}
+
+/* === Mode Chips === */
+.mode-switch {
+  display: flex;
+  background: rgba(0, 0, 0, 0.2);
+  padding: 4px;
+  border-radius: 100px;
+}
+
+.mode-chip {
+  background: transparent;
+  border: none;
+  color: var(--text-med);
+  padding: 8px 16px;
+  border-radius: 100px;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.mode-chip:hover {
+  color: var(--text-high);
+}
+
+.mode-chip.active {
+  background: var(--theme-primary);
+  color: #000;
+  font-weight: 700;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* === Circular Timer === */
+.timer-container {
+  position: relative;
+  width: 300px;
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.timer-ring {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: rotate(-90deg);
+}
+
+.ring-track {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.05);
+  stroke-width: 8;
+}
+
+.ring-progress {
+  fill: none;
+  stroke: var(--theme-primary);
+  stroke-width: 8;
+  stroke-linecap: round;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 0;
+  transition: stroke-dashoffset 1s linear, stroke 0.4s ease;
+}
+
+.timer-display {
+  font-family: var(--font-mono);
+  font-size: 4rem;
+  font-weight: 500;
+  z-index: 2;
+  letter-spacing: -2px;
+}
+
+.timer-label {
+  color: var(--text-med);
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+}
+
+/* === Controls === */
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  width: 100%;
+  justify-content: center;
+  position: relative;
+}
+
+.btn-icon,
+.btn-fab {
+  cursor: pointer;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.btn-icon:active,
+.btn-fab:active {
+  transform: scale(0.92);
+}
+
+.btn-icon {
+  background: transparent;
+  color: var(--text-med);
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+}
+.btn-icon:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--text-high);
+}
+
+.btn-fab {
+  width: 72px;
+  height: 72px;
+  border-radius: 24px;
+  background: var(--theme-primary);
+  color: #000;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+.btn-fab:hover {
+  filter: brightness(1.1);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+}
+.btn-fab .material-symbols-rounded {
+  font-size: 32px;
+}
+
+/* Iteration Badge */
+.iteration-badge {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--text-med);
+  font-size: 0.9rem;
+  position: absolute;
+  right: 0;
+}
+
+
+
+/* === Mobile Adjustments === */
+@media (max-width: 480px) {
+  .timer-container,
+  .timer-ring {
+    width: 240px;
+    height: 240px;
+  }
+  .timer-ring circle {
+    r: 110;
+    cx: 120;
+    cy: 120;
+  }
+  .timer-display {
+    font-size: 3rem;
+  }
+  .btn-fab {
+    width: 64px;
+    height: 64px;
+  }
+  .iteration-badge {
+    position: relative;
+    right: auto;
+    margin-left: 8px;
+  }
+  .controls {
+    flex-wrap: wrap;
+  }
+}
