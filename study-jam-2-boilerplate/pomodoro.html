@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GDG Pomodoro</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Roboto+Mono:wght@500&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,1,0"
+    />
+
+    <link rel="stylesheet" href="./styles/pomodoro.css" />
+  </head>
+  <body>
+    <div class="gdg-decor-bg" aria-hidden="true">
+      <span class="bracket">&lt;</span>
+      <span class="bracket">&gt;</span>
+    </div>
+
+    <header class="page-header">
+      <div class="logo-container">
+        <span class="gdg-logo-text">
+          <span class="blue">G</span><span class="red">D</span
+          ><span class="yellow">G</span> <span class="green">Timer</span>
+        </span>
+      </div>
+    </header>
+
+    <main class="layout">
+      <section class="panel glass-effect">
+        <header class="panel-header">
+          <div class="mode-switch">
+            <button id="focus-btn" class="mode-chip active" data-mode="focus">
+              Focus
+            </button>
+            <button
+              id="short-break-btn"
+              class="mode-chip"
+              data-mode="short-break"
+            >
+              Short Break
+            </button>
+            <button
+              id="long-break-btn"
+              class="mode-chip"
+              data-mode="long-break"
+            >
+              Long Break
+            </button>
+          </div>
+        </header>
+
+        <div class="timer-container">
+          <svg
+            class="timer-ring"
+            width="300"
+            height="300"
+            viewBox="0 0 300 300"
+          >
+            <circle class="ring-track" cx="150" cy="150" r="135"></circle>
+            <circle
+              class="ring-progress"
+              id="ring-progress"
+              cx="150"
+              cy="150"
+              r="135"
+              pathLength="1"
+            ></circle>
+          </svg>
+          <div class="timer-display" id="timer-display">25:00</div>
+          <p class="timer-label" id="timer-label">Time to focus</p>
+        </div>
+
+        <div class="controls">
+          <button
+            class="btn-icon secondary"
+            id="reset-btn"
+            aria-label="Reset Timer"
+          >
+            <span class="material-symbols-rounded">restart_alt</span>
+          </button>
+
+          <button
+            class="btn-fab primary"
+            id="toggle-btn"
+            aria-label="Start Timer"
+          >
+            <span class="material-symbols-rounded" id="toggle-icon"
+              >play_arrow</span
+            >
+          </button>
+
+          <div class="iteration-badge" title="Completed Sessions">
+            <span class="material-symbols-rounded">check_circle</span>
+            <span id="iteration-count">0</span>
+          </div>
+        </div>
+
+
+      </section>
+    </main>
+
+    <script type="module" src="./js/main.js"></script>
+  </body>
+</html>
