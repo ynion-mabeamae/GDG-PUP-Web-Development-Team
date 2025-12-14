@@ -37,4 +37,4 @@ An interactive Pomodoro Timer application for productivity and time management.
 
 **Tech Stack:** HTML5, CSS3, JavaScript (Vanilla)
 
-[GDG | Portfolio]()
+[Pomodoro Timer](https://pomodorostimer.netlify.app/)
